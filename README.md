@@ -57,7 +57,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 ## Author
 
 **Kanugu Rajesh**
-- GitHub: [@kanugu-rajesh](https://github.com/kanugurajesh)
+- GitHub: [@kanugurajesh](https://github.com/kanugurajesh)
 - LinkedIn: [Rajesh Kanugu](https://www.linkedin.com/in/rajesh-kanugu-aba8a3254/)
 - Portfolio: [kanugurajesh.vercel.app](https://kanugurajesh.vercel.app)
 
