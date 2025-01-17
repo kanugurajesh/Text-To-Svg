@@ -26,7 +26,7 @@ export default function Home() {
           
           <div className="flex justify-center gap-6">
             <a
-              href="https://github.com/kanugu-rajesh"
+              href="https://github.com/kanugurajesh"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-600 hover:text-purple-600 dark:text-gray-400 dark:hover:text-purple-400 transition-colors"
