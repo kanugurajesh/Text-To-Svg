@@ -20,3 +20,10 @@ export interface TextStyle {
     shadowBlur: number;
     shadowOffset: number;
   }
+
+export interface HistoryItem {
+  id: string;
+  text: string;
+  style: TextStyle;
+  timestamp: string;
+}
