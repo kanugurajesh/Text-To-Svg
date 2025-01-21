@@ -1,8 +1,8 @@
-export type ExportFormat = 'svg' | 'png' | 'jpeg';
+export type ExportFormat = 'svg' | 'png' | 'jpeg' | 'webp';
 
 export const convertSvgToImage = (
   svgString: string,
-  format: 'png' | 'jpeg',
+  format: 'png' | 'jpeg' | 'webp',
   scale: number = 2
 ): Promise<string> => {
   return new Promise((resolve, reject) => {
