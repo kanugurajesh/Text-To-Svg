@@ -1,3 +1,10 @@
+export interface ExportOptions {
+  width: number;
+  height: number;
+  quality: number;
+  transparent: boolean;
+}
+
 export type ExportFormat = 'svg' | 'png' | 'jpeg' | 'webp';
 
 export const convertSvgToImage = (

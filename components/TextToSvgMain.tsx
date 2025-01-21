@@ -10,7 +10,7 @@ import { HistoryPanel } from './HistoryPanel';
 import { TemplateGallery } from './TemplateGallery';
 import { EnhancedExport } from './EnhancedExport';
 import { generateSvg } from '@/utils/svgGenerator';
-import { downloadFile, type ExportFormat } from '@/utils/exportUtils';
+import { downloadFile, type ExportFormat, type ExportOptions } from '@/utils/exportUtils';
 import type { TextStyle, HistoryItem } from '@/types';
 
 const defaultStyle: TextStyle = {
@@ -46,8 +46,6 @@ const TextToSvgMain = () => {
     }
     return [];
   });
-  const [undoStack, setUndoStack] = useState<[string, TextStyle][]>([]);
-  const [redoStack, setRedoStack] = useState<[string, TextStyle][]>([]);
   const [activeTab, setActiveTab] = useState('edit');
 
   useEffect(() => {
@@ -59,16 +57,12 @@ const TextToSvgMain = () => {
   const handleStyleChange = (newStyle: Partial<TextStyle>) => {
     setStyle(prev => {
       const updated = { ...prev, ...newStyle };
-      setUndoStack([...undoStack, [text, prev]]);
-      setRedoStack([]);
       return updated;
     });
   };
 
   const handleTemplateSelect = (templateStyle: TextStyle) => {
     setStyle(templateStyle);
-    setUndoStack([...undoStack, [text, style]]);
-    setRedoStack([]);
     
     // Add to history
     const newHistoryItem: HistoryItem = {
@@ -80,14 +74,17 @@ const TextToSvgMain = () => {
     setHistory([newHistoryItem, ...history].slice(0, 50));
   };
 
-  const handleEnhancedExport = async (format: ExportFormat, options: any) => {
-    const svg = generateSvg(text, style);
+  const handleEnhancedExport = async (format: ExportFormat, options: ExportOptions) => {
+    const svg = generateSvg(text, {
+      ...style,
+      fontSize: style.fontSize * (options.width / 1000), // Scale font size based on export width
+    });
     
     if (format === 'svg') {
       downloadFile(svg, 'text.svg', format);
     } else {
       // For now, just download SVG since we haven't implemented format conversion yet
-      downloadFile(svg, 'text.svg', format);
+      downloadFile(svg, `text.${format}`, format);
     }
     
     // Add to history
@@ -98,26 +95,6 @@ const TextToSvgMain = () => {
       timestamp: new Date().toISOString(),
     };
     setHistory([newHistoryItem, ...history].slice(0, 50));
-  };
-
-  const handleUndo = () => {
-    if (undoStack.length > 0) {
-      const [prevText, prevStyle] = undoStack[undoStack.length - 1];
-      setRedoStack([...redoStack, [text, style]]);
-      setUndoStack(undoStack.slice(0, -1));
-      setText(prevText);
-      setStyle(prevStyle);
-    }
-  };
-
-  const handleRedo = () => {
-    if (redoStack.length > 0) {
-      const [nextText, nextStyle] = redoStack[redoStack.length - 1];
-      setUndoStack([...undoStack, [text, style]]);
-      setRedoStack(redoStack.slice(0, -1));
-      setText(nextText);
-      setStyle(nextStyle);
-    }
   };
 
   return (

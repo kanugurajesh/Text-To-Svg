@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
-import { ScrollArea } from './ui/scroll-area';
 import type { TextStyle } from '@/types';
 
 interface Template {
@@ -50,13 +49,7 @@ interface TemplateGalleryProps {
 }
 
 export function TemplateGallery({ onSelectTemplate }: TemplateGalleryProps) {
-  const [category, setCategory] = React.useState<string>('all');
-  const [searchQuery, setSearchQuery] = React.useState<string>('');
-
-  const filteredTemplates = defaultTemplates.filter(template => 
-    (category === 'all' || template.category === category) &&
-    (searchQuery === '' || template.name.toLowerCase().includes(searchQuery.toLowerCase()))
-  );
+  const filteredTemplates = defaultTemplates;
 
   return (
     <Card className="w-full">
